@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <title>Game App</title>
+  </head>
+  <body>
+    <div class="container --main-screen">
+      <div class="player player1 active-player">
+        <ul class="infoPlayer">
+          <li class="player-name">player1</li>
+          <li class="player-scoure">0</li>
+          <li class="player-sign">X</li>
+        </ul>
+      </div>
+
+      <div class="board row">
+        <h1 class="round-number">Round 1</h1>
+        <button class="cube" value="aa"><span>.</span></button>
+        <button class="cube" value="ab"><span>.</span></button>
+        <button class="cube" value="ac"><span>.</span></button>
+        <button class="cube" value="ba"><span>.</span></button>
+        <button class="cube" value="bb"><span>.</span></button>
+        <button class="cube" value="bc"><span>.</span></button>
+        <button class="cube" value="ca"><span>.</span></button>
+        <button class="cube" value="cb"><span>.</span></button>
+        <button class="cube" value="cc"><span>.</span></button>
+      </div>
+
+      <div class="player player2">
+        <li class="player-name">player2</li>
+        <li class="player-scoure">0</li>
+        <li class="player-sign">O</li>
+      </div>
+    </div>
+    <button class="btn btn-new hidden">Start New</button>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
