@@ -1,43 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מעקב משחקים</title>
     <link rel="stylesheet" href="./css/style.css" />
-
-    <title>Game App</title>
   </head>
   <body>
-    <div class="container --main-screen">
-      <div class="player player1 active-player">
-        <ul class="infoPlayer">
-          <li class="player-name">player1</li>
-          <li class="player-scoure">0</li>
-          <li class="player-sign">X</li>
-        </ul>
-      </div>
+    <main class="app-shell">
+      <header class="hero panel">
+        <div>
+          <p class="eyebrow">HTML • CSS • JavaScript</p>
+          <h1>ניהול סשן משחק</h1>
+          <p class="hero-text">
+            הוספת שחקנים, רישום סיבובים, מעקב אחר ניקוד ושמירה אוטומטית בדפדפן.
+          </p>
+          <p id="reset-warning" class="field-hint">
+            איפוס סשן מלא מוחק את כל הנתונים שנשמרו במכשיר הנוכחי.
+          </p>
+        </div>
+        <button
+          class="ghost-button"
+          type="button"
+          id="reset-session"
+          aria-describedby="reset-warning"
+        >
+          איפוס סשן מלא
+        </button>
+      </header>
 
-      <div class="board row">
-        <h1 class="round-number">Round 1</h1>
-        <button class="cube" value="aa"><span>.</span></button>
-        <button class="cube" value="ab"><span>.</span></button>
-        <button class="cube" value="ac"><span>.</span></button>
-        <button class="cube" value="ba"><span>.</span></button>
-        <button class="cube" value="bb"><span>.</span></button>
-        <button class="cube" value="bc"><span>.</span></button>
-        <button class="cube" value="ca"><span>.</span></button>
-        <button class="cube" value="cb"><span>.</span></button>
-        <button class="cube" value="cc"><span>.</span></button>
-      </div>
+      <section class="summary-grid">
+        <article class="panel stat-card">
+          <span class="stat-label">יעד איפוס</span>
+          <strong id="target-summary">50</strong>
+        </article>
+        <article class="panel stat-card">
+          <span class="stat-label">משחקים בסשן</span>
+          <strong id="total-games">0</strong>
+        </article>
+        <article class="panel stat-card">
+          <span class="stat-label">משתתפים פעילים</span>
+          <strong id="players-count">0</strong>
+        </article>
+      </section>
 
-      <div class="player player2">
-        <li class="player-name">player2</li>
-        <li class="player-scoure">0</li>
-        <li class="player-sign">O</li>
-      </div>
-    </div>
-    <button class="btn btn-new hidden">Start New</button>
+      <section class="workspace-grid">
+        <div class="workspace-main">
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>הגדרות סשן</h2>
+                <p>בחירה בין איפוס ב־50 או ב־100 נקודות.</p>
+              </div>
+            </div>
+
+            <label class="field-label" for="reset-target">יעד איפוס</label>
+            <select id="reset-target" class="field-control">
+              <option value="50">איפוס ב־50 נקודות</option>
+              <option value="100">איפוס ב־100 נקודות</option>
+            </select>
+            <p class="field-hint">
+              שחקן שעובר את היעד יסומן באדום בולט בטבלת השחקנים.
+            </p>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>ניהול שחקנים</h2>
+                <p>אפשר להוסיף משתתפים חדשים או להסיר שחקנים קיימים מהסשן.</p>
+              </div>
+            </div>
+
+            <form id="player-form" class="inline-form">
+              <label class="sr-only" for="player-name">שם שחקן</label>
+              <input
+                id="player-name"
+                name="playerName"
+                class="field-control"
+                type="text"
+                maxlength="30"
+                placeholder="שם שחקן"
+                autocomplete="off"
+                required
+              />
+              <button class="primary-button" type="submit">הוסף שחקן</button>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>רישום סיבוב</h2>
+                <p>הזן ניקוד לכל שחקן, בחר מנצח ועדכן אאסף אם צריך.</p>
+              </div>
+            </div>
+
+            <p id="round-help" class="field-hint">
+              יש להוסיף לפחות שחקן אחד כדי להתחיל לתעד נתונים.
+            </p>
+
+            <form id="round-form" class="stack-form">
+              <fieldset class="round-fieldset">
+                <legend class="field-label">פרטי הסיבוב</legend>
+
+                <div id="round-inputs" class="round-inputs" aria-live="polite"></div>
+
+                <div class="split-fields">
+                  <div>
+                    <label class="field-label" for="winner-select">מנצח/ת הסיבוב</label>
+                    <select
+                      id="winner-select"
+                      name="winner"
+                      class="field-control"
+                      required
+                    ></select>
+                  </div>
+                  <div>
+                    <label class="field-label" for="asaf-select">אאסף בסיבוב</label>
+                    <select id="asaf-select" name="asaf" class="field-control"></select>
+                  </div>
+                </div>
+
+                <button class="primary-button" type="submit">שמור סיבוב</button>
+              </fieldset>
+            </form>
+          </section>
+        </div>
+
+        <aside class="panel scoreboard-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>טבלת שחקנים</h2>
+              <p>ניקוד נוכחי, כמות משחקים, ניצחונות ואאספים לכל שחקן.</p>
+            </div>
+          </div>
+
+          <div id="players-list" class="players-list" aria-live="polite"></div>
+        </aside>
+      </section>
+
+      <div id="feedback" class="feedback" aria-live="polite"></div>
+    </main>
+
     <script src="./js/main.js"></script>
   </body>
 </html>
