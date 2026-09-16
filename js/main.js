@@ -28,6 +28,14 @@ const scores = {
   draw: 0,
 };
 
+function getCellLabel(index, value = '') {
+  const row = Math.floor(index / 3) + 1;
+  const column = (index % 3) + 1;
+  const state = value === '' ? 'empty' : `marked ${value}`;
+
+  return `Row ${row}, column ${column}, ${state}`;
+}
+
 function updateStatus(message) {
   statusText.textContent = message;
 }
@@ -61,8 +69,10 @@ function resetBoard() {
   gameActive = true;
 
   cells.forEach(cell => {
+    const index = Number(cell.dataset.index);
     cell.textContent = '';
     cell.disabled = false;
+    cell.setAttribute('aria-label', getCellLabel(index));
   });
 
   updateStatus(`Player ${currentPlayer}'s turn`);
@@ -87,6 +97,7 @@ function handleCellClick(event) {
   board[index] = currentPlayer;
   cell.textContent = currentPlayer;
   cell.disabled = true;
+  cell.setAttribute('aria-label', getCellLabel(index, currentPlayer));
 
   if (checkWinner()) {
     scores[currentPlayer] += 1;
@@ -111,6 +122,7 @@ function handleCellClick(event) {
 
 cells.forEach((cell, index) => {
   cell.dataset.index = String(index);
+  cell.setAttribute('aria-label', getCellLabel(index));
   cell.addEventListener('click', handleCellClick);
 });
 

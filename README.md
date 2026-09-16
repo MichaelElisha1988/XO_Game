@@ -14,3 +14,7 @@ A simple tic-tac-toe project built with plain HTML, CSS, and JavaScript.
 - Running scoreboard for X, O, and draws
 - Reset the current round without clearing scores
 - Start a new game and clear the scoreboard
+
+## Usage
+
+Open `/index.html` in a browser to play locally, or serve the repository with any simple static file server.
