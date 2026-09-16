@@ -92,6 +92,10 @@ h1 {
   gap: 12px;
 }
 
+.board-row {
+  display: contents;
+}
+
 .cell {
   aspect-ratio: 1;
   border: 0;

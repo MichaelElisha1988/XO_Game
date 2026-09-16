@@ -121,7 +121,11 @@ function handleCellClick(event) {
 }
 
 cells.forEach((cell, index) => {
+  const row = Math.floor(index / 3) + 1;
+  const column = (index % 3) + 1;
   cell.dataset.index = String(index);
+  cell.setAttribute('aria-rowindex', String(row));
+  cell.setAttribute('aria-colindex', String(column));
   cell.setAttribute('aria-label', getCellLabel(index));
   cell.addEventListener('click', handleCellClick);
 });
