@@ -1,116 +1,121 @@
 'use strict';
 
-const winList = [
-  ['aa', 'bb', 'cc'],
-  ['ac', 'bb', 'ca'],
-  ['aa', 'ab', 'ac'],
-  ['ba', 'bb', 'bc'],
-  ['ca', 'cb', 'cc'],
-  ['aa', 'ba', 'ca'],
-  ['ab', 'bb', 'cb'],
-  ['ac', 'bc', 'cc'],
+const winPatterns = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
 ];
 
-const players = document.querySelectorAll('.player');
-const cubes = document.querySelectorAll('.cube');
-const scoures = document.querySelectorAll('.player-scoure');
-const round = document.querySelector('.round-number');
-const btnNew = document.querySelector('.btn');
+const cells = document.querySelectorAll('[data-cell]');
+const statusText = document.querySelector('.status');
+const scoreX = document.getElementById('score-x');
+const scoreO = document.getElementById('score-o');
+const scoreDraw = document.getElementById('score-draw');
+const resetRoundButton = document.getElementById('reset-round');
+const newGameButton = document.getElementById('new-game');
 
-btnNew.addEventListener('click', newSetGame);
+let board = Array(9).fill('');
+let currentPlayer = 'X';
+let gameActive = true;
+const scores = {
+  X: 0,
+  O: 0,
+  draw: 0,
+};
 
-let player1Selections = [];
-let player2Selections = [];
-let scoureCounter = [0, 0];
-
-cubes.forEach(cube => {
-  cube.addEventListener('click', e => {
-    e.preventDefault();
-    e.srcElement.textContent = '.';
-    putTheSign(e.srcElement);
-    selectedPlayerValue(e.srcElement);
-    switchPlayer(players);
-    round.textContent = `Round ${
-      player1Selections.length + player2Selections.length + 1
-    }`;
-
-    // console.log(e.srcElement);
-  });
-});
-
-function newSetGame() {
-  player1Selections = [];
-  player2Selections = [];
-
-  cubes.forEach(cube => {
-    if (cube.firstChild.textContent !== '.') {
-      cube.innerHTML = `<span>.</span>`;
-    }
-  });
-
-  round.textContent = `Round ${
-    player1Selections.length + player2Selections.length + 1
-  }`;
-
-  players[0].classList.contains('winner')
-    ? players[0].classList.remove('winner')
-    : players[1].classList.remove('winner');
-
-  btnNew.classList.add('hidden');
+function updateStatus(message) {
+  statusText.textContent = message;
 }
 
-function switchPlayer(players) {
-  players.forEach(player => {
-    player.classList.contains('active-player')
-      ? player.classList.remove('active-player')
-      : player.classList.add('active-player');
+function updateScores() {
+  scoreX.textContent = scores.X;
+  scoreO.textContent = scores.O;
+  scoreDraw.textContent = scores.draw;
+}
+
+function switchPlayer() {
+  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+  updateStatus(`Player ${currentPlayer}'s turn`);
+}
+
+function setBoardDisabled(disabled) {
+  cells.forEach(cell => {
+    cell.disabled = disabled || cell.textContent !== '';
   });
 }
 
-function putTheSign(srcElement) {
-  srcElement.textContent = players[0].classList.contains('active-player')
-    ? 'X'
-    : 'O';
-}
-
-function selectedPlayerValue(srcElement) {
-  players[0].classList.contains('active-player')
-    ? player1Selections.push(srcElement.value)
-    : player2Selections.push(srcElement.value);
-
-  if (player1Selections.length + player2Selections.length + 1 > 5)
-    checkEndGame(player1Selections, player2Selections);
-}
-
-function winnerWinnerchikenDinner(win, Selections1, Selections2) {
-  if (
-    Selections1.includes(win[0]) &&
-    Selections1.includes(win[1]) &&
-    Selections1.includes(win[2])
-  ) {
-    switchPlayer(players);
-    players[0].classList.add('winner');
-    scoureCounter[0]++;
-    scoures[0].textContent = scoureCounter[0];
-    btnNew.classList.remove('hidden');
-  }
-
-  if (
-    Selections2.includes(win[0]) &&
-    Selections2.includes(win[1]) &&
-    Selections2.includes(win[2])
-  ) {
-    switchPlayer(players);
-
-    players[1].classList.add('winner');
-    scoureCounter[1]++;
-    scoures[1].textContent = scoureCounter[1];
-    btnNew.classList.remove('hidden');
-  }
-}
-
-function checkEndGame(Selections1, Selections2) {
-  [...winList].forEach(win =>
-    winnerWinnerchikenDinner(win, Selections1, Selections2)
+function checkWinner() {
+  return winPatterns.some(pattern =>
+    pattern.every(index => board[index] === currentPlayer)
   );
 }
+
+function resetBoard() {
+  board = Array(9).fill('');
+  currentPlayer = 'X';
+  gameActive = true;
+
+  cells.forEach(cell => {
+    cell.textContent = '';
+    cell.disabled = false;
+  });
+
+  updateStatus(`Player ${currentPlayer}'s turn`);
+}
+
+function resetGame() {
+  scores.X = 0;
+  scores.O = 0;
+  scores.draw = 0;
+  updateScores();
+  resetBoard();
+}
+
+function handleCellClick(event) {
+  const cell = event.currentTarget;
+  const index = Number(cell.dataset.index);
+
+  if (!gameActive || board[index] !== '') {
+    return;
+  }
+
+  board[index] = currentPlayer;
+  cell.textContent = currentPlayer;
+  cell.disabled = true;
+
+  if (checkWinner()) {
+    scores[currentPlayer] += 1;
+    updateScores();
+    updateStatus(`Player ${currentPlayer} wins!`);
+    gameActive = false;
+    setBoardDisabled(true);
+    return;
+  }
+
+  if (board.every(value => value !== '')) {
+    scores.draw += 1;
+    updateScores();
+    updateStatus('Round ended in a draw.');
+    gameActive = false;
+    setBoardDisabled(true);
+    return;
+  }
+
+  switchPlayer();
+}
+
+cells.forEach((cell, index) => {
+  cell.dataset.index = String(index);
+  cell.addEventListener('click', handleCellClick);
+});
+
+resetRoundButton.addEventListener('click', resetBoard);
+newGameButton.addEventListener('click', resetGame);
+
+updateScores();
+resetBoard();

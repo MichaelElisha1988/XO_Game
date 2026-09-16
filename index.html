@@ -2,42 +2,55 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XO Game</title>
     <link rel="stylesheet" href="./css/style.css" />
-
-    <title>Game App</title>
   </head>
   <body>
-    <div class="container --main-screen">
-      <div class="player player1 active-player">
-        <ul class="infoPlayer">
-          <li class="player-name">player1</li>
-          <li class="player-scoure">0</li>
-          <li class="player-sign">X</li>
-        </ul>
-      </div>
+    <main class="app">
+      <section class="game-card">
+        <p class="eyebrow">HTML • CSS • JavaScript</p>
+        <h1>XO Game</h1>
+        <p class="status" aria-live="polite">Player X's turn</p>
 
-      <div class="board row">
-        <h1 class="round-number">Round 1</h1>
-        <button class="cube" value="aa"><span>.</span></button>
-        <button class="cube" value="ab"><span>.</span></button>
-        <button class="cube" value="ac"><span>.</span></button>
-        <button class="cube" value="ba"><span>.</span></button>
-        <button class="cube" value="bb"><span>.</span></button>
-        <button class="cube" value="bc"><span>.</span></button>
-        <button class="cube" value="ca"><span>.</span></button>
-        <button class="cube" value="cb"><span>.</span></button>
-        <button class="cube" value="cc"><span>.</span></button>
-      </div>
+        <div class="scoreboard" aria-label="Scoreboard">
+          <article class="score">
+            <span class="label">Player X</span>
+            <strong id="score-x">0</strong>
+          </article>
+          <article class="score">
+            <span class="label">Draws</span>
+            <strong id="score-draw">0</strong>
+          </article>
+          <article class="score">
+            <span class="label">Player O</span>
+            <strong id="score-o">0</strong>
+          </article>
+        </div>
 
-      <div class="player player2">
-        <li class="player-name">player2</li>
-        <li class="player-scoure">0</li>
-        <li class="player-sign">O</li>
-      </div>
-    </div>
-    <button class="btn btn-new hidden">Start New</button>
+        <div class="board" role="grid" aria-label="Tic tac toe board">
+          <button class="cell" type="button" data-cell></button>
+          <button class="cell" type="button" data-cell></button>
+          <button class="cell" type="button" data-cell></button>
+          <button class="cell" type="button" data-cell></button>
+          <button class="cell" type="button" data-cell></button>
+          <button class="cell" type="button" data-cell></button>
+          <button class="cell" type="button" data-cell></button>
+          <button class="cell" type="button" data-cell></button>
+          <button class="cell" type="button" data-cell></button>
+        </div>
+
+        <div class="actions">
+          <button class="action-button" type="button" id="reset-round">
+            Reset Round
+          </button>
+          <button class="action-button secondary" type="button" id="new-game">
+            New Game
+          </button>
+        </div>
+      </section>
+    </main>
+
     <script src="./js/main.js"></script>
   </body>
 </html>
