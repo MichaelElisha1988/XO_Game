@@ -1,20 +1,22 @@
-# XO Game
+# Game Session Tracker
 
-A simple tic-tac-toe project built with plain HTML, CSS, and JavaScript.
-
-## Project structure
-
-- `/index.html` - main page markup
-- `/css/style.css` - styling for the interface
-- `/js/main.js` - game logic and score handling
+A browser-based game session tracker built with plain HTML, CSS, and JavaScript.
 
 ## Features
 
-- Two-player XO gameplay
-- Running scoreboard for X, O, and draws
-- Reset the current round without clearing scores
-- Start a new game and clear the scoreboard
+- Choose a reset target of 50 or 100 points
+- Add and remove players dynamically during the session
+- Track each player's current score, wins, games played, and `אאספים`
+- Track the total number of games played in the session
+- Highlight players in red when they pass the selected target
+- Save the full session automatically in `localStorage`
+
+## Project structure
+
+- `/index.html` - Hebrew RTL interface
+- `/css/style.css` - responsive styling
+- `/js/main.js` - session state, tracking logic, and persistence
 
 ## Usage
 
-Open `/index.html` in a browser to play locally, or serve the repository with any simple static file server.
+Open `/index.html` directly in a browser, or serve the repository with any simple static file server.
