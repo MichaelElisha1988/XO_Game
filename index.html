@@ -93,25 +93,29 @@
             </p>
 
             <form id="round-form" class="stack-form">
-              <div id="round-inputs" class="round-inputs" aria-live="polite"></div>
+              <fieldset class="round-fieldset">
+                <legend class="field-label">פרטי הסיבוב</legend>
 
-              <div class="split-fields">
-                <div>
-                  <label class="field-label" for="winner-select">מנצח/ת הסיבוב</label>
-                  <select
-                    id="winner-select"
-                    name="winner"
-                    class="field-control"
-                    required
-                  ></select>
-                </div>
-                <div>
-                  <label class="field-label" for="asaf-select">אאסף בסיבוב</label>
-                  <select id="asaf-select" name="asaf" class="field-control"></select>
-                </div>
-              </div>
+                <div id="round-inputs" class="round-inputs" aria-live="polite"></div>
 
-              <button class="primary-button" type="submit">שמור סיבוב</button>
+                <div class="split-fields">
+                  <div>
+                    <label class="field-label" for="winner-select">מנצח/ת הסיבוב</label>
+                    <select
+                      id="winner-select"
+                      name="winner"
+                      class="field-control"
+                      required
+                    ></select>
+                  </div>
+                  <div>
+                    <label class="field-label" for="asaf-select">אאסף בסיבוב</label>
+                    <select id="asaf-select" name="asaf" class="field-control"></select>
+                  </div>
+                </div>
+
+                <button class="primary-button" type="submit">שמור סיבוב</button>
+              </fieldset>
             </form>
           </section>
         </div>

@@ -11,6 +11,10 @@ A browser-based game session tracker built with plain HTML, CSS, and JavaScript.
 - Highlight players in red when they pass the selected target
 - Save the full session automatically in `localStorage`
 
+## Recording `אאספים`
+
+Use the `אאסף בסיבוב` field when a player declares Yaniv but another player catches them with an equal or lower score. Selecting that player increments their `אאספים` counter for the session.
+
 ## Project structure
 
 - `/index.html` - Hebrew RTL interface

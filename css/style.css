@@ -166,6 +166,14 @@ h2 {
   gap: 18px;
 }
 
+.round-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 18px;
+}
+
 .split-fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

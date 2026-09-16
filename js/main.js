@@ -296,6 +296,22 @@ function submitRound(formData) {
     return;
   }
 
+  const winnerExists = state.players.some(player => player.id === winnerId);
+
+  if (!winnerExists) {
+    setFeedback('המנצח שנבחר אינו קיים יותר בסשן.', true);
+    return;
+  }
+
+  const asafExists = asafId
+    ? state.players.some(player => player.id === asafId)
+    : true;
+
+  if (!asafExists) {
+    setFeedback('ערך האאסף שנבחר אינו קיים יותר בסשן.', true);
+    return;
+  }
+
   if (asafId && asafId === winnerId) {
     setFeedback('אאסף לא יכול להיות גם מנצח הסיבוב.', true);
     return;
@@ -307,7 +323,10 @@ function submitRound(formData) {
     const rawValue = formData.get(`score-${player.id}`);
     const numericValue = Number(rawValue);
 
-    if (!Number.isFinite(numericValue) || numericValue < 0) {
+    if (
+      !Number.isInteger(numericValue) ||
+      numericValue < 0
+    ) {
       setFeedback(`יש להזין ניקוד תקין עבור ${player.name}.`, true);
       return;
     }
