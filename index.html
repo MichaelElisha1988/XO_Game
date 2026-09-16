@@ -15,8 +15,16 @@
           <p class="hero-text">
             הוספת שחקנים, רישום סיבובים, מעקב אחר ניקוד ושמירה אוטומטית בדפדפן.
           </p>
+          <p id="reset-warning" class="field-hint">
+            איפוס סשן מלא מוחק את כל הנתונים שנשמרו במכשיר הנוכחי.
+          </p>
         </div>
-        <button class="ghost-button" type="button" id="reset-session">
+        <button
+          class="ghost-button"
+          type="button"
+          id="reset-session"
+          aria-describedby="reset-warning"
+        >
           איפוס סשן מלא
         </button>
       </header>

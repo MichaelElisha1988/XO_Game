@@ -54,6 +54,14 @@ function escapeHtml(value) {
   });
 }
 
+function toNonNegativeInteger(value) {
+  if (!Number.isFinite(value)) {
+    return 0;
+  }
+
+  return Math.max(0, Math.trunc(value));
+}
+
 function createPlayer(name) {
   return {
     id: generateId(),
@@ -95,10 +103,10 @@ function loadState() {
               ? player.id
               : generateId(),
           name: player.name.trim(),
-          score: Number.isFinite(player.score) ? player.score : 0,
-          gamesPlayed: Number.isFinite(player.gamesPlayed) ? player.gamesPlayed : 0,
-          wins: Number.isFinite(player.wins) ? player.wins : 0,
-          asafim: Number.isFinite(player.asafim) ? player.asafim : 0,
+          score: toNonNegativeInteger(player.score),
+          gamesPlayed: toNonNegativeInteger(player.gamesPlayed),
+          wins: toNonNegativeInteger(player.wins),
+          asafim: toNonNegativeInteger(player.asafim),
         }))
         .filter(player => player.name !== ''),
     };
@@ -189,7 +197,7 @@ function renderPlayers() {
 
   playersList.innerHTML = state.players
     .map(player => {
-      const isOverTarget = player.score > state.resetTarget;
+      const isOverTarget = player.score >= state.resetTarget;
 
       return `
         <article class="player-card${isOverTarget ? ' over-target' : ''}">
@@ -271,6 +279,15 @@ function removePlayer(playerId) {
 }
 
 function resetSession() {
+  const shouldReset = window.confirm(
+    'איפוס הסשן ימחק את כל הנתונים השמורים במכשיר הזה. להמשיך?'
+  );
+
+  if (!shouldReset) {
+    setFeedback('איפוס הסשן בוטל.');
+    return;
+  }
+
   state = createDefaultState();
   render();
   setFeedback('הסשן אופס ונשמר מחדש בדפדפן.');
