@@ -143,8 +143,7 @@ h1 {
     padding: 24px;
   }
 
-  .scoreboard,
-  .actions {
+  .scoreboard {
     grid-template-columns: 1fr;
   }
 
