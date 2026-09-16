@@ -3,6 +3,7 @@ name: Deploy static site to Pages
 on:
   push:
     branches:
+      - main
       - copilot/clear-repository-and-create-project
   workflow_dispatch:
 
